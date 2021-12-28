@@ -1,0 +1,19 @@
+{
+  "name": "firebase-message-pusher",
+  "version": "1.0.0",
+  "description": "Pushes message to FCM",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "FCM"
+  ],
+  "author": "nikhileshwar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "firebase-admin": "^10.0.1",
+    "nodemon": "^2.0.15"
+  }
+}
