@@ -6,6 +6,7 @@ import 'main.dart';
 import 'notification_data.dart';
 import 'sql_constants.dart';
 import 'sql_lite_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NotificationDisplay extends StatefulWidget {
   final SqfLiteRepository localDb;
@@ -20,6 +21,7 @@ class NotificationDisplay extends StatefulWidget {
 
 class _NotificationDisplayState extends State<NotificationDisplay>
     with WidgetsBindingObserver {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   List<NotificationData> notifications = [];
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -34,6 +36,8 @@ class _NotificationDisplayState extends State<NotificationDisplay>
   void initState() {
     FirebaseMessaging.instance.subscribeToTopic('Test');
 
+    registerDeviceIDForNotifications();
+
     FirebaseMessaging.instance.requestPermission(
       alert: true,
       announcement: false,
@@ -43,6 +47,7 @@ class _NotificationDisplayState extends State<NotificationDisplay>
       provisional: false,
       sound: true,
     );
+
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('ic_launcher');
     final IOSInitializationSettings initializationSettingsIOS =
@@ -60,6 +65,18 @@ class _NotificationDisplayState extends State<NotificationDisplay>
     super.initState();
 
     WidgetsBinding.instance?.addObserver(this);
+  }
+
+  void registerDeviceIDForNotifications() {
+    FirebaseMessaging.instance.getToken().then((value) {
+      if (value == null) {
+        return;
+      }
+
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('devices');
+      users.add({'deviceID': value});
+    });
   }
 
   void getNotificationFromDBAndRefresh() {
