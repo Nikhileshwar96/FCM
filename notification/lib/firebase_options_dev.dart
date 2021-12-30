@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     // ignore: missing_enum_constant_in_switch
     switch (defaultTargetPlatform) {
@@ -37,35 +40,21 @@ class DefaultFirebaseOptions {
     );
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAk0VsM-azETROyfQb6aefTBkz4KayV3lI',
-    appId: '1:442738042363:web:71550dd6864410d7f2d75e',
-    messagingSenderId: '442738042363',
-    projectId: 'fir-test-f3ae9',
-    authDomain: 'fir-test-f3ae9.firebaseapp.com',
-    databaseURL: 'https://fir-test-f3ae9.firebaseio.com',
-    storageBucket: 'fir-test-f3ae9.appspot.com',
-    measurementId: 'G-RCN90JW750',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB5uRwXbIJXaH7mZLslm3hWAHtIYDD-72M',
-    appId: '1:442738042363:android:e4c80077d49cb551f2d75e',
-    messagingSenderId: '442738042363',
-    projectId: 'fir-test-f3ae9',
-    databaseURL: 'https://fir-test-f3ae9.firebaseio.com',
-    storageBucket: 'fir-test-f3ae9.appspot.com',
+    apiKey: 'AIzaSyAonoQJsB7yJwwVhVcm68wI8aUOMLswZ9U',
+    appId: '1:726098058074:android:7221bd752e128a1760f163',
+    messagingSenderId: '726098058074',
+    projectId: 'mobile-app-332217',
+    storageBucket: 'mobile-app-332217.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyANvMzANM9yT0XRiuWuFswb3pBIcAqK9aE',
-    appId: '1:442738042363:ios:649239c60f3f1351f2d75e',
-    messagingSenderId: '442738042363',
-    projectId: 'fir-test-f3ae9',
-    databaseURL: 'https://fir-test-f3ae9.firebaseio.com',
-    storageBucket: 'fir-test-f3ae9.appspot.com',
-    androidClientId: '442738042363-r8dg685fmfve32hiqgqdao83rptsmg0b.apps.googleusercontent.com',
-    iosClientId: '442738042363-gsuv84bavg8a35hjgeem4q97gjqnr56q.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCQ3VfFIQOJ0rtDQlib2pj-E_1TLAmNYbQ',
+    appId: '1:726098058074:ios:e3b7f8f5917a869360f163',
+    messagingSenderId: '726098058074',
+    projectId: 'mobile-app-332217',
+    storageBucket: 'mobile-app-332217.appspot.com',
+    iosClientId: '726098058074-2ceqogb90jgvfdt6onn8tt7s7gem4goh.apps.googleusercontent.com',
     iosBundleId: 'com.example.notification',
   );
 }

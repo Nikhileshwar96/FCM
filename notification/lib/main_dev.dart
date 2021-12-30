@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:notification/helpers/flavor_provider.dart';
 import 'package:notification/helpers/sql_lite_repository.dart';
 import 'app.dart';
-import 'firebase_options.dart';
+import 'firebase_options_dev.dart';
 
 import 'helpers/flavor.dart';
-import 'helpers/flavor_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,14 +14,14 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  var _prodFlavor = FlavorConfig(
-    Flavor.prod,
-    "prod",
-    Colors.red,
+  var flavor = FlavorConfig(
+    Flavor.dev,
+    "dev",
+    Colors.green,
   );
 
   runApp(App(
-    _prodFlavor,
+    flavor,
     localDb: localDB,
   ));
 }

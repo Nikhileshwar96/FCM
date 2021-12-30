@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'sql_constants.dart';
+import '../models/sql_constants.dart';
 
 class SqfLiteRepository {
   Database? dbInstance;
