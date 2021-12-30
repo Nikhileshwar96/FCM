@@ -4,7 +4,7 @@ const { initializeApp, applicationDefault, cert } = require('firebase-admin/app'
 const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
 
 const admin = require("firebase-admin");
-const serviceAccount = require("./firebaseNotificationKey.json");
+const serviceAccount = require("./firebaseDevKey.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -14,7 +14,7 @@ const db = getFirestore();
 const docRef = db.collection('devices');
 const app = express();
 
-app.listen('4000', async ()=>{
+app.listen('5000', async ()=>{
     console.log("Server listening at http://localhost:4000");
 });
 

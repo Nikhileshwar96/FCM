@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:notification/helpers/flavor_provider.dart';
 
 import '../models/notification_data.dart';
 import '../models/sql_constants.dart';
@@ -67,16 +68,21 @@ class _NotificationDisplayState extends State<NotificationDisplay>
     WidgetsBinding.instance?.addObserver(this);
   }
 
-  void registerDeviceIDForNotifications() {
-    FirebaseMessaging.instance.getToken().then((value) {
-      if (value == null) {
-        return;
-      }
+  void registerDeviceIDForNotifications() async {
+    var deviceId = await FirebaseMessaging.instance.getToken();
 
-      CollectionReference users =
-          FirebaseFirestore.instance.collection('devices');
-      users.add({'deviceID': value});
-    });
+    if (deviceId == null) {
+      return;
+    }
+
+    CollectionReference devices =
+    FirebaseFirestore.instance.collection('devices');
+    var registeredDevices = await devices.where('deviceID', isEqualTo: deviceId).get();
+    if(registeredDevices.size > 0) {
+      return;
+    }
+
+    devices.add({'deviceID': deviceId});
   }
 
   void getNotificationFromDBAndRefresh() {
@@ -94,9 +100,10 @@ class _NotificationDisplayState extends State<NotificationDisplay>
 
   @override
   Widget build(BuildContext context) {
+    var flavor = FlavorProvider.of(context);
     return notifications.isEmpty
-        ? const Center(
-            child: Text('No notifications received'),
+        ? Center(
+            child: Text('No notifications received in ${flavor.flavorConfig.name}'),
           )
         : ListView.builder(
             itemCount: notifications.length,
@@ -106,8 +113,9 @@ class _NotificationDisplayState extends State<NotificationDisplay>
                   _index.toString(),
                 ),
                 title: Text(notifications[_index].title),
-                leading: const Icon(
+                leading: Icon(
                   Icons.notifications_active,
+                  color: flavor.flavorConfig.color,
                 ),
                 subtitle: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

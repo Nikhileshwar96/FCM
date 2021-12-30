@@ -24,7 +24,7 @@ class App extends StatelessWidget {
         ),
         home: Scaffold(
           appBar: AppBar(
-            title: const Text('Notifications'),
+            title: Text('Notifications ${flavor.name}'),
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(

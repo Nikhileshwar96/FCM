@@ -14,6 +14,12 @@ class FlavorProvider extends InheritedWidget {
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {
     return true;
   }
+
+  static FlavorProvider of(BuildContext context) {
+    final FlavorProvider? result = context.dependOnInheritedWidgetOfExactType<FlavorProvider>();
+    assert(result != null, 'No Flavor found in context');
+    return result!;
+  }
 }
 
 class FlavorConfig {
